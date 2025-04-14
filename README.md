@@ -1,7 +1,3 @@
-from pathlib import Path
-
-# Conteúdo do README.md
-readme_content = """
 # 🎵 Manga Sound Template
 
 Bem-vindo ao **Manga Sound Template**, um projeto de reprodutor de música orientado a objetos!  
@@ -20,7 +16,7 @@ O **Manga Sound** é um aplicativo de reprodução de música que organiza os ar
 
 O sistema foi modelado com base em programação orientada a objetos. Abaixo, temos o diagrama de classes:
 
-![Diagrama de Classes](./image.png)
+![image (1)](https://github.com/user-attachments/assets/14026300-9db1-417a-b38d-6d00636823da)
 
 ### Principais Classes
 
@@ -40,15 +36,9 @@ O sistema foi modelado com base em programação orientada a objetos. Abaixo, te
 
 ## 👥 Equipe
 
-1.  
-2.  
+1. Hélio Nunes Moraes Junior
+2. Rodrigo Alves Oliveira
+3. Kevilyn Bitencourt da Cruz
+4. José Vitor Patriota Santos
+5. Cauã Curvelo Ribeiro Meira
 
-*Adicione aqui os nomes dos integrantes do grupo.*
-"""
-
-# Caminho para salvar o arquivo
-output_path = Path("/mnt/data/README.md")
-output_path.write_text(readme_content.strip(), encoding="utf-8")
-
-# Retornar o caminho do arquivo
-output_path.name
