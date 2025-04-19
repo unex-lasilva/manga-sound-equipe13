@@ -1,0 +1,79 @@
+package main;
+
+public class ReprodutorLista {
+    private ListaReproducao listaReproducao;
+    private int posicaoAtual;
+    private String status;
+
+    public ReprodutorLista() {
+        this.listaReproducao = null;
+        this.posicaoAtual = 0;
+        this.status = "parado";
+    }
+
+    public void setListaReproducao(ListaReproducao listaReproducao) {
+        this.listaReproducao = listaReproducao;
+        this.posicaoAtual = 0;
+    }
+
+    public ListaReproducao getListaReproducao() {
+        return listaReproducao;
+    }
+
+    public void play() {
+        if (listaReproducao == null || listaReproducao.getMusicas().size() == 0) {
+            System.out.println("Lista de reprodução vazia.");
+            return;
+        }
+
+        Musica musica = (Musica) listaReproducao.getMusicas().get(posicaoAtual);
+        System.out.println("Tocando: " + musica.getTitulo() + " - " + musica.getArtista());
+        status = "tocando";
+    }
+
+    public void pause() {
+        if (status.equals("tocando")) {
+            System.out.println("Música pausada.");
+            status = "pausado";
+        }
+    }
+    
+    public void restartMusica() {
+        if (status.equals("pausado")) {
+                System.out.println("Reiniciando música: " + ((Musica) listaReproducao.getMusicas().get(posicaoAtual)).getTitulo());
+                status = "tocando";
+            } else {
+                System.out.println("A música não está pausada.");
+            }
+    }
+
+    public void restartLista() {
+        if (listaReproducao != null) {
+            posicaoAtual = 0;
+            play();
+        }
+    }
+
+    public void stop() {
+        System.out.println("Reprodução parada.");
+        status = "parado";
+    }
+
+    public void proximaMusica() {
+        if (listaReproducao != null && posicaoAtual < listaReproducao.getMusicas().size() - 1) {
+            posicaoAtual++;
+            play();
+        } else {
+            System.out.println("Fim da lista.");
+        }
+    }
+
+    public void musicaAnterior() {
+        if (listaReproducao != null && posicaoAtual > 0) {
+            posicaoAtual--;
+            play();
+        } else {
+            System.out.println("Você está no início da lista.");
+        }
+    }
+}
