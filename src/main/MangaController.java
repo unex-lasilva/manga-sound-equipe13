@@ -2,11 +2,11 @@ package main;
 
 import java.util.Scanner;
 
-public class MangaSoundApplication {
+public class MangaController {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        MangaSoundController controller = new MangaSoundController(); // Classe controladora
+        MangaController controller = new MangaController();
 
         int opcao;
 
@@ -25,7 +25,7 @@ public class MangaSoundApplication {
             }
 
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer
+            scanner.nextLine(); 
 
             switch (opcao) {
                 case 1:
