@@ -22,11 +22,9 @@ public class Main {
                 scanner.next();
             }
             opcao = scanner.nextInt();
-            scanner.nextLine(); // limpar o buffer
-
+            scanner.nextLine();
             switch (opcao) {
                 case 1:
-                    // código inalterado para adicionar música
                     System.out.print("🎵 Título da música: ");
                     String titulo = scanner.nextLine();
                     System.out.print("🎤 Artista: ");
@@ -42,7 +40,6 @@ public class Main {
                     break;
 
                 case 2:
-                    // código inalterado para criar lista
                     System.out.print("📄 Nome da nova lista de reprodução: ");
                     String nomeLista = scanner.nextLine();
                     controller.criarNovaLista(nomeLista);
@@ -50,11 +47,10 @@ public class Main {
                     break;
 
                 case 3:
-                    // editar lista: agora passa índice de lista e música sem subtrair 1
                     controller.listarListas();
                     System.out.print("🔢 Número da lista para editar: ");
                     int numeroLista = scanner.nextInt();
-                    scanner.nextLine(); // limpar buffer
+                    scanner.nextLine();
 
                     if (numeroLista < 1 || numeroLista > controller.quantidadeListas()) {
                         System.out.println("❌ Lista não encontrada. Tente novamente.\n");
@@ -64,11 +60,11 @@ public class Main {
                     controller.exibirMusicasRepositorio();
                     System.out.print("🎼 Índice da música para adicionar: ");
                     int indiceMusica = scanner.nextInt();
-                    scanner.nextLine(); // limpar buffer
+                    scanner.nextLine();
 
                     System.out.print("➡️ Posição para inserir na lista (0 = início): ");
                     int novaPosicao = scanner.nextInt();
-                    scanner.nextLine(); // limpar buffer
+                    scanner.nextLine();
 
                     if (controller.adicionarMusicaNaLista(numeroLista, indiceMusica, novaPosicao)) {
                         System.out.println("✅ Música adicionada à lista com sucesso!\n");
@@ -78,11 +74,10 @@ public class Main {
                     break;
 
                 case 4:
-                    // executar lista: passa índice de lista sem subtrair 1
                     controller.listarListas();
                     System.out.print("🔢 Número da lista para executar: ");
                     int listaParaExec = scanner.nextInt();
-                    scanner.nextLine(); // limpar buffer
+                    scanner.nextLine();
 
                     if (listaParaExec < 1 || listaParaExec > controller.quantidadeListas()) {
                         System.out.println("❌ Lista não encontrada. Tente novamente.\n");
