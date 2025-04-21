@@ -36,9 +36,9 @@ O sistema foi modelado com base em programação orientada a objetos. Abaixo, te
 
 ## 👥 Equipe
 
-1. Hélio Nunes Moraes Junior
-2. Rodrigo Alves Oliveira
-3. Kevilyn Bitencourt da Cruz
-4. José Vitor Patriota Santos
-5. Cauã Curvelo Ribeiro Meira
+1- Hélio Nunes Moraes Junior
+2- Rodrigo Alves Oliveira
+3- Kevilyn Bitencourt da Cruz
+4- José Vitor Patriota Santos
+5- Cauã Curvelo Ribeiro Meira
 
