@@ -9,7 +9,6 @@ public class Musica {
     private int duracao;
     private String path;
 
-    // Construtor completo
     public Musica(String titulo, String artista, String album, int anoLancamento, String genero, int duracao, String path) {
         this.titulo = titulo;
         this.artista = artista;
@@ -20,12 +19,10 @@ public class Musica {
         this.path = path;
     }
 
-    // Construtor simplificado
     public Musica(String titulo, String artista, String path) {
-        this(titulo, artista, null, 0, null, 0, path); // reutiliza o construtor completo
+        this(titulo, artista, null, 0, null, 0, path);
     }
 
-    // Getters
     public String getTitulo() {
         return titulo;
     }
@@ -54,13 +51,11 @@ public class Musica {
         return path;
     }
 
-    // Método toString para facilitar a visualização
     @Override
     public String toString() {
         return String.format("%s - %s [%s, %d, %s, %ds]", titulo, artista, album != null ? album : "Desconhecido", anoLancamento, genero != null ? genero : "Desconhecido", duracao);
     }
 
-    // Método equals para comparar músicas (utilizado, por exemplo, na busca ou comparação de elementos nas listas)
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -69,7 +64,6 @@ public class Musica {
         return titulo.equals(musica.titulo) && artista.equals(musica.artista) && path.equals(musica.path);
     }
 
-    // Método hashCode para garantir que a comparação funcione corretamente em coleções como List, Set, etc.
     @Override
     public int hashCode() {
         return 31 * titulo.hashCode() + 31 * artista.hashCode() + path.hashCode();
