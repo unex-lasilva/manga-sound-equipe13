@@ -6,7 +6,7 @@ public class ListaReproducao {
 
     public ListaReproducao(String titulo) {
         this.titulo = titulo;
-        this.lista = new ListaEncadeada<>();  // diamond operator infere <Musica>
+        this.lista = new ListaEncadeada<>(); 
     }
 
     public String getTitulo() {
@@ -19,7 +19,7 @@ public class ListaReproducao {
 
     public Musica getMusica(int posicao) {
         if (posicao < 0 || posicao >= lista.size()) {
-            return null; // Retorna null se a posição for inválida
+            return null;
         }
         return lista.get(posicao);
     }
@@ -123,7 +123,6 @@ public class ListaReproducao {
         }
     }
 
-    // Agora implementado corretamente, sem exception
     public int tamanho() {
         return lista.size();
     }
