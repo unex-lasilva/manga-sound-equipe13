@@ -1,16 +1,14 @@
 package main;
 
 public class No<T> {
-    private T elemento;  // Usando generics para permitir tipos específicos
-    private No<T> proximo;  // Referência para o próximo nó
+    private T elemento;
+    private No<T> proximo;
 
-    // Construtor
     public No(T elemento) {
         this.elemento = elemento;
         this.proximo = null;
     }
 
-    // Getter e Setter para o elemento
     public T getElemento() {
         return elemento;
     }
@@ -19,7 +17,6 @@ public class No<T> {
         this.elemento = elemento;
     }
 
-    // Getter e Setter para o próximo nó
     public No<T> getProximo() {
         return proximo;
     }
