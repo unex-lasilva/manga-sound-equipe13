@@ -8,6 +8,7 @@ public class ReprodutorLista {
     private ListaReproducao listaReproducao;
     private int musicaAtualIndex;
     private String status;
+
     private Clip clip;
     private AudioInputStream audioStream;
 
@@ -26,7 +27,6 @@ public class ReprodutorLista {
         this.musicaAtualIndex = 0;
         this.status = "parado";
     }
-    
 
     public void setListaReproducao(ListaReproducao listaReproducao) {
         stop();
@@ -40,16 +40,23 @@ public class ReprodutorLista {
             return;
         }
 
-        if (playbackThread != null && playbackThread.isAlive()) {
+        if (status.equals("tocando")) {
             System.out.println("Já está tocando.");
             return;
         }
 
+        if (status.equals("pausado")) {
+            resume();
+            return;
+        }
+
+        stopRequest = false;
+        skipRequest = false;
+
         playbackThread = new Thread(() -> {
-            while (musicaAtualIndex < listaReproducao.tamanho()) {
+            while (musicaAtualIndex < listaReproducao.tamanho() && !stopRequest) {
                 Musica musica = listaReproducao.obterMusica(musicaAtualIndex);
                 tocarMusica(musica);
-                if (stopRequest) break;
                 if (!skipRequest) break;
                 skipRequest = false;
                 musicaAtualIndex++;
@@ -63,16 +70,23 @@ public class ReprodutorLista {
         try {
             File audioFile = new File(musica.getPath());
             if (!audioFile.exists()) {
-                System.out.println("Arquivo não encontrado: " + musica.getPath());
+                System.out.println("❌ Arquivo não encontrado: " + musica.getPath());
                 return;
             }
 
             audioStream = AudioSystem.getAudioInputStream(audioFile);
             clip = AudioSystem.getClip();
             clip.open(audioStream);
+
+            // Volume (opcional)
+            if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+                FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                volume.setValue(0.0f); // Pode ajustar volume aqui
+            }
+
             clip.start();
             status = "tocando";
-            System.out.println("Tocando: " + musica.getTitulo() + " - " + musica.getArtista());
+            System.out.println("🎧 Tocando: " + musica.getTitulo() + " - " + musica.getArtista());
 
             while (!skipRequest && !stopRequest && clip.isRunning()) {
                 Thread.sleep(100);
@@ -83,7 +97,7 @@ public class ReprodutorLista {
             audioStream.close();
 
         } catch (Exception e) {
-            System.err.println("Erro ao tocar música: " + e.getMessage());
+            System.err.println("⚠️ Erro ao tocar música: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -92,7 +106,7 @@ public class ReprodutorLista {
         if (clip != null && clip.isRunning()) {
             clip.stop();
             status = "pausado";
-            System.out.println("Música pausada.");
+            System.out.println("⏸ Música pausada.");
         }
     }
 
@@ -100,18 +114,31 @@ public class ReprodutorLista {
         if (clip != null && status.equals("pausado")) {
             clip.start();
             status = "tocando";
-            System.out.println("Música retomada.");
+            System.out.println("▶️ Música retomada.");
         }
     }
 
     public void stop() {
         stopRequest = true;
-        if (clip != null && clip.isOpen()) {
+
+        if (clip != null && clip.isRunning()) {
             clip.stop();
+        }
+
+        if (clip != null && clip.isOpen()) {
             clip.close();
         }
+
+        try {
+            if (audioStream != null) {
+                audioStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         status = "parado";
-        System.out.println("Reprodução parada.");
+        System.out.println("⏹ Reprodução parada.");
     }
 
     public void proximaMusica() {
@@ -121,7 +148,7 @@ public class ReprodutorLista {
             stop();
             play();
         } else {
-            System.out.println("Fim da lista.");
+            System.out.println("⚠️ Fim da lista.");
         }
     }
 
@@ -132,7 +159,7 @@ public class ReprodutorLista {
             stop();
             play();
         } else {
-            System.out.println("Você está no início da lista.");
+            System.out.println("⚠️ Você está no início da lista.");
         }
     }
 
@@ -140,16 +167,15 @@ public class ReprodutorLista {
         if (listaReproducao != null) {
             listaReproducao.addMusica(musica);
         } else {
-            System.out.println("Lista de reprodução não definida.");
+            System.out.println("❌ Lista de reprodução não definida.");
         }
     }
-
 
     public void adicionarMusicaNaPosicao(Musica musica, int posicao) {
         if (listaReproducao != null) {
             listaReproducao.adicionarMusicaNaPosicao(musica, posicao);
         } else {
-            System.out.println("Lista de reprodução não definida.");
+            System.out.println("❌ Lista de reprodução não definida.");
         }
     }
 }

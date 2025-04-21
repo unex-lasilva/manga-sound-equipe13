@@ -9,6 +9,7 @@ public class Musica {
     private int duracao;
     private String path; 
 
+    // Construtor completo
     public Musica(String titulo, String artista, String album, int anoLancamento, String genero, int duracao, String path) {
         this.titulo = titulo;
         this.artista = artista;
@@ -19,12 +20,12 @@ public class Musica {
         this.path = path;
     }
 
+    // Construtor simplificado
     public Musica(String titulo, String artista, String path) {
-        this.titulo = titulo;
-        this.artista = artista;
-        this.path = path;
+        this(titulo, artista, null, 0, null, 0, path); // reutiliza o construtor acima
     }
 
+    // Getters
     public String getTitulo() {
         return titulo;
     }
@@ -52,5 +53,4 @@ public class Musica {
     public String getPath() {
         return path;
     }
-    
 }
