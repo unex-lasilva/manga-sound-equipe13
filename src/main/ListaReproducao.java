@@ -2,34 +2,45 @@ package main;
 
 public class ListaReproducao {
     private String titulo;
-    private ListaEncadeada lista;
+    private ListaEncadeada<Musica> lista;
 
     public ListaReproducao(String titulo) {
         this.titulo = titulo;
-        this.lista = new ListaEncadeada();
+        this.lista = new ListaEncadeada<>();  // diamond operator infere <Musica>
     }
 
     public String getTitulo() {
         return titulo;
     }
 
-    public ListaEncadeada getlista() {
+    public ListaEncadeada<Musica> getLista() {
         return lista;
     }
 
     public Musica getMusica(int posicao) {
-        return (Musica) lista.get(posicao);
+        if (posicao < 0 || posicao >= lista.size()) {
+            return null; // Retorna null se a posição for inválida
+        }
+        return lista.get(posicao);
     }
 
-    public int quantidadelista() {
+    public int quantidadeDeMusicas() {
         return lista.size();
     }
 
     public void addMusica(Musica musica) {
-        lista.append(musica);
+        if (musica != null) {
+            lista.append(musica);
+        } else {
+            System.out.println("Música inválida.");
+        }
     }
 
     public void inserirMusica(int posicao, Musica musica) {
+        if (musica == null) {
+            System.out.println("Música inválida.");
+            return;
+        }
         if (posicao < 0 || posicao > lista.size()) {
             System.out.println("Posição inválida para inserir música.");
         } else {
@@ -38,31 +49,23 @@ public class ListaReproducao {
     }
 
     public boolean contemMusica(Musica musica) {
-        return lista.posicaoDa(musica) != -1;
-    }
-
-    public int tamanho() {
-        return lista.size();
+        return musica != null && lista.posicaoDa(musica) != -1;
     }
 
     public void removerMusica(int posicao) {
         if (posicao < 0 || posicao >= lista.size()) {
             System.out.println("Posição inválida para remover música.");
         } else {
-            Musica musicaRemovida = (Musica) lista.get(posicao);
+            Musica musicaRemovida = lista.get(posicao);
             lista.remove(posicao);
-            System.out.println("Música removida: " + musicaRemovida.getTitulo() + " - " + musicaRemovida.getArtista());
+            System.out.println("Música removida: " +
+                musicaRemovida.getTitulo() + " - " + musicaRemovida.getArtista());
         }
     }
 
     public int posicaoDa(Musica musica) {
-        for (int i = 0; i < lista.size(); i++) {
-            Musica atual = (Musica) lista.get(i);
-            if (atual.equals(musica)) {
-                return i;
-            }
-        }
-        return -1;
+        if (musica == null) return -1;
+        return lista.posicaoDa(musica);
     }
 
     public boolean limparLista() {
@@ -70,53 +73,58 @@ public class ListaReproducao {
             System.out.println("A lista já está vazia.");
             return false;
         } else {
-            lista = new ListaEncadeada();
+            lista = new ListaEncadeada<>();
             System.out.println("Lista de reprodução limpa com sucesso.");
             return true;
         }
     }
 
-    public void criarListaReproducao() {
-        this.titulo = "Nova Lista de Reprodução";
+    public void criarListaReproducao(String nome) {
+        this.titulo = nome != null ? nome : "Nova Lista de Reprodução";
         System.out.println("Criando nova lista de reprodução: " + titulo);
-        lista = new ListaEncadeada();
+        lista = new ListaEncadeada<>();
     }
 
     public Musica obterMusica(int posicao) {
         if (posicao >= 0 && posicao < lista.size()) {
-            return (Musica) lista.get(posicao);
+            return lista.get(posicao);
         }
         return null;
     }
 
     public void adicionarMusicaNaPosicao(Musica musica, int posicao) {
-        if (lista != null && posicao >= 0 && posicao <= lista.size()) {
+        if (musica != null && posicao >= 0 && posicao <= lista.size()) {
             lista.inserir(posicao, musica);
         } else {
-            System.out.println("Posição inválida ou lista não inicializada.");
+            System.out.println("Posição inválida ou música não válida.");
         }
     }
 
     public void display() {
         System.out.println("Playlist: " + titulo);
-        if (tamanho() == 0) {
+        if (quantidadeDeMusicas() == 0) {
             System.out.println("  (Vazia)");
         } else {
-            for (int i = 0; i < tamanho(); i++) {
+            for (int i = 0; i < quantidadeDeMusicas(); i++) {
                 Musica m = obterMusica(i);
                 if (m != null) {
                     System.out.printf("  %d. %s - %s [%s, %d, %s, %ds]%n",
-                            i + 1,
-                            m.getTitulo(),
-                            m.getArtista(),
-                            m.getAlbum(),
-                            m.getAnoLancamento(),
-                            m.getGenero(),
-                            m.getDuracao());
+                        i + 1,
+                        m.getTitulo(),
+                        m.getArtista(),
+                        m.getAlbum(),
+                        m.getAnoLancamento(),
+                        m.getGenero(),
+                        m.getDuracao());
                 } else {
                     System.out.println("  " + (i + 1) + ". [Erro ao obter música]");
                 }
             }
         }
+    }
+
+    // Agora implementado corretamente, sem exception
+    public int tamanho() {
+        return lista.size();
     }
 }
