@@ -1,97 +1,102 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MangaController {
+    private List<Musica> repositorioMusica;
+    private List<ListaReproducao> listasReproducao;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        MangaController controller = new MangaController();
+    public MangaController() {
+        repositorioMusica = new ArrayList<>();
+        listasReproducao = new ArrayList<>();
+    }
 
-        int opcao;
+    public void adicionarMusicaAoRepositorio(String titulo, String artista, String path) {
+        Musica novaMusica = new Musica(titulo, artista, path);
+        repositorioMusica.add(novaMusica);
+    }
 
+    public void criarNovaLista(String nomeLista) {
+        ListaReproducao novaLista = new ListaReproducao(nomeLista);
+        listasReproducao.add(novaLista);
+    }
+
+    public void listarListas() {
+        if (listasReproducao.isEmpty()) {
+            System.out.println("❌ Nenhuma lista de reprodução encontrada.");
+            return;
+        }
+
+        System.out.println("\n🎵 Listas de Reprodução:");
+        for (int i = 0; i < listasReproducao.size(); i++) {
+            System.out.println((i + 1) + ". " + listasReproducao.get(i).getTitulo());
+        }
+    }
+
+    public void exibirMusicasRepositorio() {
+        if (repositorioMusica.isEmpty()) {
+            System.out.println("❌ Nenhuma música disponível no repositório.");
+            return;
+        }
+
+        System.out.println("\n🎼 Músicas no Repositório:");
+        for (int i = 0; i < repositorioMusica.size(); i++) {
+            System.out.println((i + 1) + ". " + repositorioMusica.get(i).getTitulo() + " - " + repositorioMusica.get(i).getArtista());
+        }
+    }
+
+    public void adicionarMusicaNaLista(int numeroLista, int indiceMusica, int novaPosicao) {
+        if (numeroLista < 1 || numeroLista > listasReproducao.size()) {
+            System.out.println("❌ Lista de reprodução não encontrada.");
+            return;
+        }
+
+        ListaReproducao lista = listasReproducao.get(numeroLista - 1);
+        if (indiceMusica < 1 || indiceMusica > repositorioMusica.size()) {
+            System.out.println("❌ Música não encontrada no repositório.");
+            return;
+        }
+
+        Musica musica = repositorioMusica.get(indiceMusica - 1);
+        lista.adicionarMusicaNaPosicao(musica, novaPosicao - 1); 
+        System.out.println("✅ Música adicionada à lista \"" + lista.getTitulo() + "\".");
+    }
+
+    public void executarLista(int numeroLista, Scanner scanner) {
+        if (numeroLista < 1 || numeroLista > listasReproducao.size()) {
+            System.out.println("❌ Lista de reprodução não encontrada.");
+            return;
+        }
+
+        ListaReproducao lista = listasReproducao.get(numeroLista - 1);
+        ReprodutorLista reprodutor = new ReprodutorLista(lista);
+        System.out.println("🎶 Reproduzindo a lista: " + lista.getTitulo());
+
+        String comando;
         do {
-            System.out.println("===== 🎧 MangaSound - Menu Principal =====");
-            System.out.println("1. Adicionar Música ao Repositório");
-            System.out.println("2. Criar Lista de Reprodução");
-            System.out.println("3. Editar Lista de Reprodução");
-            System.out.println("4. Executar Lista de Reprodução");
-            System.out.println("5. Sair");
-            System.out.print("Escolha uma opção: ");
+            reprodutor.play();
+            System.out.print("Comando (p=parar, v=voltar, n=próxima, s=sair): ");
+            comando = scanner.nextLine();
 
-            while (!scanner.hasNextInt()) {
-                System.out.print("Por favor, insira um número válido: ");
-                scanner.next();
-            }
-
-            opcao = scanner.nextInt();
-            scanner.nextLine(); 
-
-            switch (opcao) {
-                case 1:
-                    System.out.print("🎵 Título da música: ");
-                    String titulo = scanner.nextLine();
-
-                    System.out.print("🎤 Artista: ");
-                    String artista = scanner.nextLine();
-
-                    System.out.print("📁 Caminho do arquivo (.wav): ");
-                    String path = scanner.nextLine();
-
-                    controller.adicionarMusica(titulo, path, artista);
-
-                    System.out.println("✅ Música adicionada com sucesso ao repositório!\n");
+            switch (comando.toLowerCase()) {
+                case "p":
+                    reprodutor.pause();
                     break;
-
-                case 2:
-                    System.out.print("📄 Nome da nova lista de reprodução: ");
-                    String nomeLista = scanner.nextLine();
-
-                    controller.criarListaReproducao(nomeLista);
-
-                    System.out.println("✅ Lista \"" + nomeLista + "\" criada com sucesso!\n");
+                case "v":
+                    reprodutor.musicaAnterior();
                     break;
-
-                case 3:
-                    System.out.print("🔢 Número da lista que deseja editar: ");
-                    int numeroLista = scanner.nextInt();
-                    scanner.nextLine(); // limpar buffer
-
-                    System.out.print("🔢 Número da música que deseja mover: ");
-                    int numeroMusica = scanner.nextInt();
-
-                    System.out.print("➡️ Nova posição na lista: ");
-                    int novaPosicao = scanner.nextInt();
-                    scanner.nextLine(); // limpar buffer
-
-                    controller.editarListaReproducao(numeroLista, numeroMusica, novaPosicao);
-
-                    System.out.println("✅ Lista de reprodução editada com sucesso!\n");
+                case "n":
+                    reprodutor.proximaMusica();
                     break;
-
-                case 4:
-                    System.out.print("🔢 Número da lista que deseja executar: ");
-                    int listaParaExecutar = scanner.nextInt();
-                    scanner.nextLine(); // limpar buffer
-
-                    System.out.println("🎶 Executando lista... Use os comandos:");
-                    System.out.println("p - parar | v - voltar | n - próxima | s - sair da execução");
-
-                    controller.executarLista(listaParaExecutar, scanner);
-
-                    System.out.println("🏁 Execução finalizada.\n");
+                case "s":
+                    reprodutor.stop();
                     break;
-
-                case 5:
-                    System.out.println("👋 Saindo do MangaSound. Até logo!");
-                    break;
-
                 default:
-                    System.out.println("❌ Opção inválida. Escolha entre 1 e 5.\n");
+                    System.out.println("❌ Comando inválido.");
             }
 
-        } while (opcao != 5);
-
-        scanner.close();
+        } while (!comando.equalsIgnoreCase("s"));
     }
 }

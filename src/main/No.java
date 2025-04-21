@@ -1,24 +1,27 @@
 package main;
 
 public class No {
-    private Musica musica;
-    private No proximoNo;
+    private Object elemento;
+    private No proximo;
 
-    public No(Musica musica) {
-        this.musica = musica;
-        this.proximoNo = null;
+    public No(Object elemento) {
+        this.elemento = elemento;
+        this.proximo = null;
     }
 
-    public Musica getMusica() {
-        return musica;
+    public Object getElemento() {
+        return elemento;
     }
 
-    public No getProximoNo() {
-        return proximoNo;
+    public void setElemento(Object elemento) {
+        this.elemento = elemento;
     }
 
-    public void setProximoNo(No proximoNo) {
-        this.proximoNo = proximoNo;
+    public No getProximo() {
+        return proximo;
     }
-    
+
+    public void setProximo(No proximo) {
+        this.proximo = proximo;
+    }
 }

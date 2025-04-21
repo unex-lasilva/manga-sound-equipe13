@@ -21,7 +21,6 @@ public class ListaReproducao {
         return (Musica) lista.get(posicao);
     }
 
-
     public int quantidadelista() {
         return lista.size();
     }
@@ -90,4 +89,34 @@ public class ListaReproducao {
         return null;
     }
 
+    public void adicionarMusicaNaPosicao(Musica musica, int posicao) {
+        if (lista != null && posicao >= 0 && posicao <= lista.size()) {
+            lista.inserir(posicao, musica);
+        } else {
+            System.out.println("Posição inválida ou lista não inicializada.");
+        }
+    }
+
+    public void display() {
+        System.out.println("Playlist: " + titulo);
+        if (tamanho() == 0) {
+            System.out.println("  (Vazia)");
+        } else {
+            for (int i = 0; i < tamanho(); i++) {
+                Musica m = obterMusica(i);
+                if (m != null) {
+                    System.out.printf("  %d. %s - %s [%s, %d, %s, %ds]%n",
+                            i + 1,
+                            m.getTitulo(),
+                            m.getArtista(),
+                            m.getAlbum(),
+                            m.getAnoLancamento(),
+                            m.getGenero(),
+                            m.getDuracao());
+                } else {
+                    System.out.println("  " + (i + 1) + ". [Erro ao obter música]");
+                }
+            }
+        }
+    }
 }
