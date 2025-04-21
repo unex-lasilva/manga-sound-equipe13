@@ -9,7 +9,6 @@ public class ListaEncadeada<T> {
         this.tamanho = 0;
     }
 
-    // Adiciona um elemento ao final da lista
     public void append(T elemento) {
         if (elemento == null) return;
 
@@ -26,7 +25,6 @@ public class ListaEncadeada<T> {
         tamanho++;
     }
 
-    // Insere um elemento em uma posição específica
     public void inserir(int posicao, T elemento) {
         if (posicao < 0 || posicao > tamanho || elemento == null) return;
 
@@ -47,7 +45,6 @@ public class ListaEncadeada<T> {
         tamanho++;
     }
 
-    // Obtém o elemento na posição especificada
     public T get(int posicao) {
         if (posicao < 0 || posicao >= tamanho) return null;
 
@@ -59,7 +56,6 @@ public class ListaEncadeada<T> {
         return atual.getElemento();
     }
 
-    // Remove o elemento na posição especificada
     public void remove(int posicao) {
         if (posicao < 0 || posicao >= tamanho) return;
 
@@ -77,12 +73,10 @@ public class ListaEncadeada<T> {
         tamanho--;
     }
 
-    // Retorna o tamanho da lista
     public int size() {
         return tamanho;
     }
 
-    // Retorna a posição do elemento na lista
     public int posicaoDa(T elemento) {
         if (elemento == null) return -1;
 
@@ -94,7 +88,6 @@ public class ListaEncadeada<T> {
         return -1;
     }
 
-    // Classe interna No<T>
     private static class No<T> {
         private T elemento;
         private No<T> proximo;
