@@ -6,15 +6,23 @@ public class Musica {
     private String album;
     private int anoLancamento;
     private String genero;
-    private int duracao; // em segundos
+    private int duracao;
+    private String path; 
 
-    public Musica(String titulo, String artista, String album, int anoLancamento, String genero, int duracao) {
+    public Musica(String titulo, String artista, String album, int anoLancamento, String genero, int duracao, String path) {
         this.titulo = titulo;
         this.artista = artista;
         this.album = album;
         this.anoLancamento = anoLancamento;
         this.genero = genero;
         this.duracao = duracao;
+        this.path = path;
+    }
+
+    public Musica(String titulo, String artista, String path) {
+        this.titulo = titulo;
+        this.artista = artista;
+        this.path = path;
     }
 
     public String getTitulo() {
@@ -39,6 +47,10 @@ public class Musica {
 
     public int getDuracao() {
         return duracao;
+    }
+
+    public String getPath() {
+        return path;
     }
     
 }
