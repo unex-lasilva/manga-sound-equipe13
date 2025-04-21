@@ -42,3 +42,20 @@ O sistema foi modelado com base em programação orientada a objetos. Abaixo, te
 4. José Vitor Patriota Santos
 5. Cauã Curvelo Ribeiro Meira
 
+## 📊 Avaliação entre os Membros
+
+| Membro / Avaliado         | Hélio Nunes | Rodrigo Alves | Kevilyn Bitencourt | José Vitor | Cauã Curvelo |
+|---------------------------|-------------|----------------|---------------------|-------------|----------------|
+| **Hélio Nunes**           | —           | [10]           | [10]                | [9]         | [9]            |
+| **Rodrigo Alves**         | [10]         | —              | [10]                | [9]         | [9]            |
+| **Kevilyn Bitencourt**    | [10]         | [10]           | —                  | [9]         | [9]            |
+| **José Vitor**            | [10]         | [10]           | [10]                | —           | [9]            |
+| **Cauã Curvelo**          | [10]         | [10]           | [10]                | [9]         | —              |
+
+> 🔢 Cada membro atribui uma nota de 0 a 10 para os colegas, levando em consideração:
+> - Participação nas atividades  
+> - Colaboração em equipe  
+> - Entregas e comprometimento  
+> - Comunicação e proatividade
+
+
