@@ -14,12 +14,23 @@ public class MangaController {
         listasReproducao = new ArrayList<>();
     }
 
-    public void adicionarMusicaAoRepositorio(String titulo, String artista, String path) {
+    public boolean adicionarMusicaAoRepositorio(String titulo, String artista, String path) {
+        if (titulo == null || artista == null || path == null || titulo.isEmpty() || artista.isEmpty() || path.isEmpty()) {
+            System.out.println("❌ Dados inválidos para a música.");
+            return false;
+        }
+
         Musica novaMusica = new Musica(titulo, artista, path);
         repositorioMusica.add(novaMusica);
+        return true;
     }
 
     public void criarNovaLista(String nomeLista) {
+        if (nomeLista == null || nomeLista.isEmpty()) {
+            System.out.println("❌ Nome inválido para a lista.");
+            return;
+        }
+
         ListaReproducao novaLista = new ListaReproducao(nomeLista);
         listasReproducao.add(novaLista);
     }
@@ -48,21 +59,27 @@ public class MangaController {
         }
     }
 
-    public void adicionarMusicaNaLista(int numeroLista, int indiceMusica, int novaPosicao) {
+    public boolean adicionarMusicaNaLista(int numeroLista, int indiceMusica, int novaPosicao) {
         if (numeroLista < 1 || numeroLista > listasReproducao.size()) {
             System.out.println("❌ Lista de reprodução não encontrada.");
-            return;
+            return false;
         }
 
         ListaReproducao lista = listasReproducao.get(numeroLista - 1);
         if (indiceMusica < 1 || indiceMusica > repositorioMusica.size()) {
             System.out.println("❌ Música não encontrada no repositório.");
-            return;
+            return false;
+        }
+
+        if (novaPosicao < 0 || novaPosicao > lista.quantidadeDeMusicas()) {
+            System.out.println("❌ Posição inválida na lista.");
+            return false;
         }
 
         Musica musica = repositorioMusica.get(indiceMusica - 1);
-        lista.adicionarMusicaNaPosicao(musica, novaPosicao - 1); 
+        lista.adicionarMusicaNaPosicao(musica, novaPosicao); 
         System.out.println("✅ Música adicionada à lista \"" + lista.getTitulo() + "\".");
+        return true;
     }
 
     public void executarLista(int numeroLista, Scanner scanner) {
@@ -99,5 +116,9 @@ public class MangaController {
             }
 
         } while (!comando.equalsIgnoreCase("s"));
+    }
+
+    public int quantidadeListas() {
+        return listasReproducao.size();
     }
 }
