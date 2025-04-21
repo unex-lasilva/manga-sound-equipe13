@@ -27,7 +27,7 @@ public class Main {
             scanner.nextLine(); // limpar o buffer
 
             switch (opcao) {
-                case 1 -> {
+                case 1:
                     System.out.print("🎵 Título da música: ");
                     String titulo = scanner.nextLine();
 
@@ -39,15 +39,17 @@ public class Main {
 
                     controller.adicionarMusicaAoRepositorio(titulo, artista, path);
                     System.out.println("✅ Música adicionada ao repositório com sucesso!\n");
-                }
-                case 2 -> {
+                    break;
+
+                case 2:
                     System.out.print("📄 Nome da nova lista de reprodução: ");
                     String nomeLista = scanner.nextLine();
 
                     controller.criarNovaLista(nomeLista);
                     System.out.println("✅ Lista \"" + nomeLista + "\" criada com sucesso!\n");
-                }
-                case 3 -> {
+                    break;
+
+                case 3:
                     controller.listarListas();
                     System.out.print("🔢 Número da lista para editar: ");
                     int numeroLista = scanner.nextInt();
@@ -63,17 +65,23 @@ public class Main {
                     scanner.nextLine();
 
                     controller.adicionarMusicaNaLista(numeroLista, indiceMusica, novaPosicao);
-                }
-                case 4 -> {
+                    break;
+
+                case 4:
                     controller.listarListas();
                     System.out.print("🔢 Número da lista para executar: ");
                     int indice = scanner.nextInt();
                     scanner.nextLine();
 
                     controller.executarLista(indice, scanner);
-                }
-                case 5 -> System.out.println("👋 Encerrando o MangaSound. Até a próxima!");
-                default -> System.out.println("❌ Opção inválida. Tente novamente.\n");
+                    break;
+
+                case 5:
+                    System.out.println("👋 Encerrando o MangaSound. Até a próxima!");
+                    break;
+
+                default:
+                    System.out.println("❌ Opção inválida. Tente novamente.\n");
             }
 
         } while (opcao != 5);
